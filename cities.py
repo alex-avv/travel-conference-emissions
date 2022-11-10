@@ -10,7 +10,8 @@ class City:
         if not isinstance(country, str):
             raise TypeError("Country should be given as a string")
         if not isinstance(num_attendees, int):
-            raise TypeError("Number of attendees should be given as a integer")
+            raise TypeError("Number of attendees should be given as an "
+                            "integer")
         if not isinstance(lat, float):
             raise TypeError("Latitude should be given as a floating point "
                             "number")
