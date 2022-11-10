@@ -1,5 +1,4 @@
 # pylint: disable = C0114, C0115, C0116
-# pycodestyle: disable = E501
 from typing import Dict, List, Tuple
 
 
@@ -18,6 +17,19 @@ class City:
         if not isinstance(long, float):
             raise TypeError("Longitude should be given as a floating point "
                             "number")
+
+        if name[0].islower():
+            raise ValueError("First letter in name should be upper case")
+        if country[0].islower():
+            raise ValueError("First letter in country should be upper case")
+        if num_attendees < 0:
+            raise ValueError("Number of attendees should be a positive "
+                             "integer")
+        if lat < -90.0 or lat > 90.0:
+            raise ValueError("Latitude should be between -90 and 90 degrees")
+        if long < -180.0 or long > 180.0:
+            raise ValueError("Longitude should be between -180 and 180 "
+                             "degrees")
 
         self.name = name
         self.country = country
