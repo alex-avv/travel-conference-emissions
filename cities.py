@@ -113,7 +113,9 @@ class CityCollection:
               f"{total_attendees_not_host}")
 
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
-        raise NotImplementedError
+        return sorted([(host_city.name, self.total_co2(host_city))
+                       for host_city in self.cities],
+                      key=lambda tup: tup[1])
 
     def plot_top_emitters(self, city: City, n: int, save: bool):
         raise NotImplementedError
