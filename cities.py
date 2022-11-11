@@ -117,5 +117,29 @@ class CityCollection:
                        for host_city in self.cities],
                       key=lambda tup: tup[1])
 
-    def plot_top_emitters(self, city: City, n: int, save: bool):
-        raise NotImplementedError
+    def plot_top_emitters(self, city: City, n: int = 10, save: bool = False):
+        host_city = city
+        dic_co2_by_country = self.co2_by_country(host_city)
+
+        if n > len(dic_co2_by_country):
+            raise ValueError(f"Chosen top emitters number ({n}) is larger "
+                             "than the available number of countries "
+                             f"({len(dic_co2_by_country)})")
+
+        import matplotlib.pyplot as plt
+        lis_country_by_co2 = sorted(dic_co2_by_country.items(), reverse=True,
+                                    key=lambda tup: tup[1])
+        x, y = list(map(list, zip(*lis_country_by_co2)))
+        if n < len(x):
+            x, y = x[:n] + ['All other countries'], y[:n] + [sum(y[n:])]
+
+        fig, ax = plt.subplots()
+        colors = plt.get_cmap('tab20b')([0 + i/len(x) for i in range(len(x))])
+        ax.bar(x, [ys/1000 for ys in y], color=colors)
+        ax.set_title(f'Total emissions for each country (top {n})')
+        ax.set_ylabel('Total emissions (tonnes CO2)')
+
+        if save:
+            fig.savefig(f"./{host_city.name.lower().replace(' ','_')}.png")
+        else:
+            fig
