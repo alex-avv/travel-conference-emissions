@@ -42,10 +42,20 @@ class City:
         self.long_rad = long * pi / 180
 
     def distance_to(self, other: 'City') -> float:
-        raise NotImplementedError
+        earth_r = 6371
+        dis = (2 * earth_r *
+               asin(sqrt(((sin((self.lat_rad - other.lat_rad) / 2)) ** 2)
+                         + cos(other.lat_rad) * cos(self.lat_rad) *
+                         ((sin((self.long_rad - other.long_rad) / 2)) ** 2))))
+        return dis
 
     def co2_to(self, other: 'City') -> float:
-        raise NotImplementedError
+        dis = self.distance_to(other)
+        if dis <= 1000.0:
+            return dis * 200 * self.num_attendees
+        if dis <= 8000.0:
+            return dis * 250 * self.num_attendees
+        return dis * 300 * self.num_attendees
 
 
 class CityCollection:
