@@ -80,13 +80,22 @@ class CityCollection:
                     for city in self.cities if city != host_city])
 
     def travel_by_country(self, city: City) -> Dict[str, float]:
-        raise NotImplementedError
+        host_city = city
+        return {country: sum([city.distance_to(host_city) * city.num_attendees
+                              for city in self.cities
+                              if city != host_city and city.country == country
+                              ])
+                for country in self.countries()}
 
     def total_co2(self, city: City) -> float:
         raise NotImplementedError
 
     def co2_by_country(self, city: City) -> Dict[str, float]:
-        raise NotImplementedError
+        host_city = city
+        return {country: sum([city.co2_to(host_city) for city in self.cities
+                              if city != host_city and city.country == country
+                              ])
+                for country in self.countries()}
 
     def summary(self, city: City):
         raise NotImplementedError
