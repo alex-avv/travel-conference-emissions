@@ -88,7 +88,9 @@ class CityCollection:
                 for country in self.countries()}
 
     def total_co2(self, city: City) -> float:
-        raise NotImplementedError
+        host_city = city
+        return sum([city.co2_to(host_city) for city in self.cities
+                    if city != host_city])
 
     def co2_by_country(self, city: City) -> Dict[str, float]:
         host_city = city
@@ -98,7 +100,17 @@ class CityCollection:
                 for country in self.countries()}
 
     def summary(self, city: City):
-        raise NotImplementedError
+        host_city = city
+        cities_not_host = [city for city in self.cities if city != host_city]
+        total_cities_not_host = len(cities_not_host)
+        total_attendees_not_host = sum([city.num_attendees
+                                        for city in cities_not_host])
+
+        print(f"Host city: {host_city.name} ({host_city.country})\n"
+              f"Total CO2: {round(self.total_co2(host_city) / 1000)} tonnes\n"
+              f"Total attendees travelling to {host_city.name} "
+              f"from {total_cities_not_host} different cities: "
+              f"{total_attendees_not_host}")
 
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:
         raise NotImplementedError
