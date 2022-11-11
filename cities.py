@@ -59,7 +59,7 @@ class City:
 
 
 class CityCollection:
-    def __init__(self, cities: list):
+    def __init__(self, cities: List[City]):
         if not isinstance(cities, list):
             raise TypeError("Cities should be given as a list of City objects")
         if not all([isinstance(city, City) for city in cities]):
@@ -69,13 +69,15 @@ class CityCollection:
         self.cities = cities
 
     def countries(self) -> List[str]:
-        raise NotImplementedError
+        return sorted(list(set([city.country for city in self.cities])))
 
     def total_attendees(self) -> int:
-        raise NotImplementedError
+        return sum([city.num_attendees for city in self.cities])
 
     def total_distance_travel_to(self, city: City) -> float:
-        raise NotImplementedError
+        host_city = city
+        return sum([city.distance_to(host_city) * city.num_attendees
+                    for city in self.cities if city != host_city])
 
     def travel_by_country(self, city: City) -> Dict[str, float]:
         raise NotImplementedError
