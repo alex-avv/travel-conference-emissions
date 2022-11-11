@@ -1,5 +1,6 @@
 # pylint: disable = C0114, C0115, C0116
 from typing import Dict, List, Tuple
+from math import pi, sqrt, sin, cos, asin
 
 
 class City:
@@ -28,7 +29,7 @@ class City:
                              "integer")
         if lat < -90.0 or lat > 90.0:
             raise ValueError("Latitude should be between -90 and 90 degrees")
-        if long < -180.0 or long > 180.0:
+        if long <= -180.0 or long > 180.0:
             raise ValueError("Longitude should be between -180 and 180 "
                              "degrees")
 
@@ -37,6 +38,8 @@ class City:
         self.num_attendees = num_attendees
         self.lat = lat
         self.long = long
+        self.lat_rad = lat * pi / 180
+        self.long_rad = long * pi / 180
 
     def distance_to(self, other: 'City') -> float:
         raise NotImplementedError
@@ -46,7 +49,14 @@ class City:
 
 
 class CityCollection:
-    ...
+    def __init__(self, cities: list):
+        if not isinstance(cities, list):
+            raise TypeError("Cities should be given as a list of City objects")
+        if not all([isinstance(city, City) for city in cities]):
+            raise TypeError("Cities should be given as a list of only City "
+                            "objects")
+
+        self.cities = cities
 
     def countries(self) -> List[str]:
         raise NotImplementedError
