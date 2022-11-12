@@ -52,3 +52,6 @@ def test_co2_to(test_name):
     host_city, visitor_city = City(*host_city_input), City(*visitor_city_input)
     co2 = visitor_city.co2_to(host_city)
     assert co2 == expected_value
+
+def test_read_attendees_file():
+    raise NotImplementedError

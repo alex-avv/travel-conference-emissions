@@ -84,8 +84,8 @@
 			}
 		},
 		{"short_haul_flight_case": {
-			"properties_host_city": ["Wellington", "New Zealand", 10, 0.0, 0.0],
-			"properties_visitor_city": ["Valladolid", "Spain", 2, 0.0, 71.94572847349845],
+			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 2, 0.0, 71.94572847349845],
 			"expected_value":  4000000.0
 			}
 		},
