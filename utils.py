@@ -33,8 +33,12 @@ def read_attendees_file(filepath: Path) -> CityCollection:
     cits, countrs, ns, lats, longs = list(map(list, zip(*cities_ordered_data)))
     cits, countrs, ns, lats, longs = assign_cities_data_types(cits, countrs,
                                                               ns, lats, longs)
+    city_assigned_type_data = list(zip(cits, countrs, ns, lats, longs))
 
-    raise NotImplementedError
+    city_objects_list = [City(*city_data)
+                         for city_data in city_assigned_type_data]
+
+    return CityCollection(city_objects_list)
 
 
 def assign_cities_data_types(cits: List[str], countrs: List[str],
@@ -91,4 +95,4 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
             raise TypeError(f"Longitude '{longs[i]}' in row {i + 2} should be "
                             "written as a floating point number") from err
 
-    raise NotImplementedError
+    return cits, countrs, ns, lats, longs  # type: ignore
