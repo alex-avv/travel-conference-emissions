@@ -25,5 +25,33 @@
 				"expected_err_message": "Longitude should be given as a floating point number"
 			}
 		}
+	],
+	
+	"City_properties_value": [
+		{"non_str_name": {
+			"properties": ["paris", "France", 173, 48.8566101, 2.3514992],
+			"expected_err_message": "First letter in name should be upper case"
+			}
+		},
+		{"non_str_country": {
+			"properties": ["Paris", "france", 173, 48.8566101, 2.351499],
+			"expected_err_message": "First letter in country should be upper case"
+			}
+		},
+		{"non_int_num_of_attendees": {
+			"properties": ["Paris", "France", -173, 48.8566101, 2.351499],
+			"expected_err_message": "Number of attendees should be a positive integer"
+			}
+		},
+		{"non_int_lat": {
+				"properties": ["Paris", "France", 173, 90.1, 2.351499],
+				"expected_err_message": "Latitude should be between -90 and 90 degrees"
+			}
+		},
+		{"non_int_long": {
+				"properties": ["Paris", "France", 173, 48.8566101, -180.0],
+				"expected_err_message": "Longitude should be between -180 and 180 degrees"
+			}
+		}
 	]
 }
