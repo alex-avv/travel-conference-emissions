@@ -1,0 +1,29 @@
+{
+	"City_properties_type": [
+		{"non_str_name": {
+			"properties": [9, "France", 173, 48.8566101, 2.3514992],
+			"expected_err_message": "Name should be given as a string"
+			}
+		},
+		{"non_str_country": {
+			"properties": ["Paris", 7.0, 173, 48.8566101, 2.351499],
+			"expected_err_message": "Country should be given as a string"
+			}
+		},
+		{"non_int_num_of_attendees": {
+			"properties": ["Paris", "France", 173.0, 48.8566101, 2.351499],
+			"expected_err_message": "Number of attendees should be given as an integer"
+			}
+		},
+		{"non_int_lat": {
+				"properties": ["Paris", "France", 173, "48.8566101", 2.351499],
+				"expected_err_message": "Latitude should be given as a floating point number"
+			}
+		},
+		{"non_int_long": {
+				"properties": ["Paris", "France", 173, 48.8566101, 2],
+				"expected_err_message": "Longitude should be given as a floating point number"
+			}
+		}
+	]
+}

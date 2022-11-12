@@ -1,36 +1,25 @@
 # pylint: disable = C0103, C0114, C0115, C0116
 # type: ignore
-from pytest import raises
+import json
+from pytest import mark, raises
 from cities import City, CityCollection
 
+with open('test_fixtures.json', 'r', encoding="utf-8") as json_test_fixtures:
+    dict_test_fixtures = json.load(json_test_fixtures)
 
-def test_City_attributes_type():
 
-    with raises(TypeError) as exception:
-        City(9, 'France', 173, 48.8566101, 2.3514992)
-    assert str(exception.value) == ("Name should be given as a string")
-
-    with raises(TypeError) as exception:
-        City('Paris', 7.0, 173, 48.8566101, 2.3514992)
-    assert str(exception.value) == ("Country should be given as a string")
-
-    with raises(TypeError) as exception:
-        City('Paris', 'France', 173.0, 48.8566101, 2.3514992)
-    assert str(exception.value) == ("Number of attendees should be given as "
-                                    "an integer")
+@mark.parametrize('test_name', dict_test_fixtures['City_properties_type'])
+def test_City_properties_type(test_name):
+    buffer = list(test_name.values())[0]
+    city_input = buffer['properties']
+    expected_err_message = buffer['expected_err_message']
 
     with raises(TypeError) as exception:
-        City('Paris', 'France', 173, '48.8566101', 2.3514992)
-    assert str(exception.value) == ("Latitude should be given as a floating "
-                                    "point number")
-
-    with raises(TypeError) as exception:
-        City('Paris', 'France', 173, 48.8566101, 2)
-    assert str(exception.value) == ("Longitude should be given as a floating "
-                                    "point number")
+        City(*city_input)
+    assert str(exception.value) == expected_err_message
 
 
-def test_City_attributes_value():
+def test_City_properties_value():
 
     with raises(ValueError) as exception:
         City('paris', 'France', 173, 48.8566101, 2.3514992)
@@ -53,6 +42,6 @@ def test_City_attributes_value():
                                     "degrees")
 
     with raises(ValueError) as exception:
-        City('Paris', 'France', 173, 48.8566101, -181.0)
+        City('Paris', 'France', 173, 48.8566101, -180.0)
     assert str(exception.value) == ("Longitude should be between -180 and 180 "
                                     "degrees")
