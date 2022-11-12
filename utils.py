@@ -68,5 +68,27 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
         except Exception as err:
             raise TypeError(f"Number of attendees '{ns[i]}' in row {i + 2} "
                             "should be written as an integer") from err
+        try:
+            if '.' not in lats[i]:
+                raise TypeError('Floating point number is missing a '
+                                'decimal point')
+            if not all([any([num in letter for num in (numbers + ['.', '-'])])
+                        for letter in lats[i]]):
+                raise TypeError('Floating point number contains character')
+            lats[i] = float(lats[i])  # type: ignore
+        except Exception as err:
+            raise TypeError(f"Latitude '{lats[i]}' in row {i + 2} should be "
+                            "written as a floating point number") from err
+        try:
+            if '.' not in longs[i]:
+                raise TypeError('Floating point number is missing a '
+                                'decimal point')
+            if not all([any([num in letter for num in (numbers + ['.', '-'])])
+                        for letter in longs[i]]):
+                raise TypeError('Floating point number contains character')
+            longs[i] = float(longs[i])  # type: ignore
+        except Exception as err:
+            raise TypeError(f"Longitude '{longs[i]}' in row {i + 2} should be "
+                            "written as a floating point number") from err
 
     raise NotImplementedError
