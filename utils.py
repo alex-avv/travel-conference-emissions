@@ -1,4 +1,5 @@
 # pylint: disable = C0114, C0116
+from typing import List, Tuple
 from pathlib import Path
 import csv
 from cities import City, CityCollection
@@ -27,4 +28,16 @@ def read_attendees_file(filepath: Path) -> CityCollection:
     cities_ordered_data = [tuple([row[i] for i in ordered_col_indexes])
                            for row in attendees_raw_data[1:]]
 
+    # Changing columns to appropriate data types for the City object's input
+    cits, countrs, ns, lats, longs = list(map(list, zip(*cities_ordered_data)))
+    cits, countrs, ns, lats, longs = assign_cities_data_types(cits, countrs,
+                                                              ns, lats, longs)
+
+    raise NotImplementedError
+
+
+def assign_cities_data_types(cits: List[str], countrs: List[str],
+                             ns: List[str], lats: List[str], longs: List[str]
+                             ) -> Tuple[List[str], List[str], List[int],
+                                        List[float], List[float]]:
     raise NotImplementedError
