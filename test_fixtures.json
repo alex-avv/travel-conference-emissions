@@ -15,12 +15,12 @@
 			"expected_err_message": "Number of attendees should be given as an integer"
 			}
 		},
-		{"non_int_lat": {
+		{"non_float_lat": {
 				"properties": ["Paris", "France", 173, "48.8566101", 2.351499],
 				"expected_err_message": "Latitude should be given as a floating point number"
 			}
 		},
-		{"non_int_long": {
+		{"non_float_long": {
 				"properties": ["Paris", "France", 173, 48.8566101, 2],
 				"expected_err_message": "Longitude should be given as a floating point number"
 			}
@@ -28,29 +28,71 @@
 	],
 	
 	"City_properties_value": [
-		{"non_str_name": {
+		{"first_letter_lower_case_name": {
 			"properties": ["paris", "France", 173, 48.8566101, 2.3514992],
 			"expected_err_message": "First letter in name should be upper case"
 			}
 		},
-		{"non_str_country": {
+		{"first_letter_lower_case_country": {
 			"properties": ["Paris", "france", 173, 48.8566101, 2.351499],
 			"expected_err_message": "First letter in country should be upper case"
 			}
 		},
-		{"non_int_num_of_attendees": {
+		{"negative_num_of_attendees": {
 			"properties": ["Paris", "France", -173, 48.8566101, 2.351499],
 			"expected_err_message": "Number of attendees should be a positive integer"
 			}
 		},
-		{"non_int_lat": {
+		{"outside_of_range_lat": {
 				"properties": ["Paris", "France", 173, 90.1, 2.351499],
 				"expected_err_message": "Latitude should be between -90 and 90 degrees"
 			}
 		},
-		{"non_int_long": {
+		{"outside_of_range_long": {
 				"properties": ["Paris", "France", 173, 48.8566101, -180.0],
 				"expected_err_message": "Longitude should be between -180 and 180 degrees"
+			}
+		}
+	],
+
+	"distance_to": [
+		{"general_case": {
+			"properties_host_city": ["Host City", "Host Country", 0, 0.0, 0.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 0, -8.993216059187306, 0.0],
+			"expected_value": 1000.0
+			}
+		},
+		{"opposite_sides_on_earth": {
+			"properties_host_city": ["Wellington", "New Zealand", 0, -41.288795, 174.777211],
+			"properties_visitor_city": ["Valladolid", "Spain", 0, 41.288795, -5.222789],
+			"expected_value": 20015.086796020572
+			}
+		},
+		{"same_place": {
+			"properties_host_city": ["Host City", "Host Country", 0, 25.0, -113.0],
+			"properties_visitor_city": ["Host City", "Host Country", 0, 25.0, -113.0],
+			"expected_value": 0
+			}
+		}
+	],
+
+	"co2_to": [
+		{"public_transport_case": {
+			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 5, 0.0, 8.993216059187306],
+			"expected_value":  1000000.0
+			}
+		},
+		{"short_haul_flight_case": {
+			"properties_host_city": ["Wellington", "New Zealand", 10, 0.0, 0.0],
+			"properties_visitor_city": ["Valladolid", "Spain", 2, 0.0, 71.94572847349845],
+			"expected_value":  4000000.0
+			}
+		},
+		{"long_haul_flight_case": {
+			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
+			"properties_visitor_city": ["Host City", "Host Country", 5, 0.0, 89.93216059187306],
+			"expected_value": 15000000.0
 			}
 		}
 	]
