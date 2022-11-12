@@ -58,5 +58,15 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
         except Exception as err:
             raise TypeError(f"Country '{countrs[i]}' in row {i + 2} should be "
                             "written as a string") from err
+        try:
+            if '.' in ns[i]:
+                raise TypeError('Integer contains decimal point')
+            if not all([any([num in letter for num in numbers])
+                        for letter in ns[i]]):
+                raise TypeError('Integer contains character')
+            ns[i] = int(ns[i])  # type: ignore
+        except Exception as err:
+            raise TypeError(f"Number of attendees '{ns[i]}' in row {i + 2} "
+                            "should be written as an integer") from err
 
     raise NotImplementedError
