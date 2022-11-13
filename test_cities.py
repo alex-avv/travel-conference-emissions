@@ -156,3 +156,17 @@ def test_travel_by_country(city_collection, host_city):
                      'Empty Country': 0.0,  # Empty City
                      'Host Country': 1000.0 * 5}  # City D
     assert city_collection.travel_by_country(host_city) == expected_dict
+
+
+@mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
+def test_total_co2(city_collection, host_city):
+    expected_value = (1000.0 * 5 * 200  # City A
+                      + 8000.0 * 2 * 250  # City B
+                      + 10000.0 * 5 * 300  # City C
+                      + 1000.0 * 5 * 200  # City D
+                      + 5376.784134555366 * 250  # City E
+                      + 12313.69104931205 * 300  # City F
+                      + 4621.144035453923 * 2 * 250  # City G
+                      + 8000.0 * 2 * 250  # City H
+                      + 0.0)  # Empty City
+    assert city_collection.total_co2(host_city) == expected_value
