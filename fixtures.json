@@ -33,9 +33,19 @@
 			"expected_err_message": "First letter in name should be upper case"
 			}
 		},
+		{"with_numbers_name": {
+			"properties": ["9aris", "France", 173, 48.8566101, 2.3514992],
+			"expected_err_message": "Name contains numbers"
+			}
+		},
 		{"first_letter_lower_case_country": {
 			"properties": ["Paris", "france", 173, 48.8566101, 2.351499],
 			"expected_err_message": "First letter in country should be upper case"
+			}
+		},
+		{"with_numbers_country": {
+			"properties": ["Paris", "France 3", 173, 48.8566101, 2.351499],
+			"expected_err_message": "Country contains numbers"
 			}
 		},
 		{"negative_num_of_attendees": {
@@ -56,10 +66,16 @@
 	],
 
 	"distance_to": [
-		{"general_case": {
+		{"general_case_1": {
 			"properties_host_city": ["Host City", "Host Country", 0, 0.0, 0.0],
 			"properties_visitor_city": ["Visitor City", "Visitor Country", 0, -8.993216059187306, 0.0],
 			"expected_value": 1000.0
+			}
+		},
+		{"general_case_2": {
+			"properties_host_city": ["Host City", "Host Country", 10, 47.0, -13.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 3, 41.288795, -5.222789],
+			"expected_value":  887.0646603570423
 			}
 		},
 		{"opposite_sides_on_earth": {
@@ -77,22 +93,31 @@
 	],
 
 	"co2_to": [
-		{"public_transport_case": {
+		{"public_transport_case_1": {
 			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
-			"properties_visitor_city": ["Visitor City", "Visitor Country", 5, 0.0, 8.993216059187306],
-			"expected_value":  1000000.0
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 5, 0.0, -8.993216059187306],
+			"expected_value":  1000000.0,
+			"comment": "1000.0 * 5 * 200 = 1,000,000.0"
+			}
+		},
+		{"public_transport_case_2": {
+			"properties_host_city": ["Host City", "Host Country", 10, 47.0, -13.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 3, 41.288795, -5.222789],
+			"expected_value":  532238.7962142254,
+			"comment": "887.0646603570423 * 3 * 200 = 532,238.7962142254"
 			}
 		},
 		{"short_haul_flight_case": {
-			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
-			"properties_visitor_city": ["Visitor City", "Visitor Country", 2, 0.0, 71.94572847349845],
-			"expected_value":  4000000.0
+			"properties_host_city": ["Host City", "Host Country", 10, 71.94572847349845, 0.0],
+			"properties_visitor_city": ["Visitor City", "Visitor Country", 2, 0.0, 0.0],
+			"expected_value":  4000000.0,
+			"comment": "(8 * 1000.0) * 2 * 250 = 4,000,000.0"
 			}
 		},
 		{"long_haul_flight_case": {
-			"properties_host_city": ["Host City", "Host Country", 10, 0.0, 0.0],
+			"properties_host_city": ["Host City", "Host Country", 10, 47.0, -13.0],
 			"properties_visitor_city": ["Host City", "Host Country", 5, 0.0, 89.93216059187306],
-			"expected_value": 15000000.0
+			"expected_value":  16475640.772526952
 			}
 		}
 	]

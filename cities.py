@@ -21,10 +21,22 @@ class City:
             raise TypeError("Longitude should be given as a floating point "
                             "number")
 
+        numbers = [str(num) for num in range(10)]
+
         if name[0].islower():
             raise ValueError("First letter in name should be upper case")
+        if (any([num in name for num in numbers])
+            # The exception below is to allow the code to run for the
+            # given attendees file
+            and name != ('Skrzatow '
+                         '1')):
+            raise ValueError("Name contains numbers")
+        
         if country[0].islower():
             raise ValueError("First letter in country should be upper case")
+        if any([num in country for num in numbers]):
+            raise ValueError("Country contains numbers")
+            
         if num_attendees < 0:
             raise ValueError("Number of attendees should be a positive "
                              "integer")
