@@ -213,3 +213,25 @@ def test_sorted_by_emissions(city_collection):
                      ('City F', 101781389.10593049),
                      ('Empty City', 121371790.09858932)]
     assert city_collection.sorted_by_emissions() == expected_list
+
+
+@mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
+def test_plot_top_emitters(city_collection, host_city):
+
+    expected_x = ['Country D', 'Country E', 'Country F', 'Country B',
+                  'All other countries']
+    expected_y = [15000000.0 / 1000,  # Country D
+                  4000000.0 / 1000,  # Country E
+                  4000000.0 / 1000,  # Country F
+                  3694107.314793615 / 1000,  # Country B
+                  (1000000.0 + 3654768.051365803 + 0.0
+                   + 1000000.0) / 1000]  # All other countries
+
+    n = 4
+    figure_plot = city_collection.plot_top_emitters(host_city, n)
+    axes_plot = figure_plot.axes[0]
+    figure_plot.draw_without_rendering()
+    x_values_plot = [xs.get_text() for xs in axes_plot.get_xticklabels()]
+    y_values_plot = list(axes_plot.containers[0].datavalues)
+
+    assert (x_values_plot, y_values_plot) == (expected_x, expected_y)
