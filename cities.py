@@ -1,6 +1,7 @@
-# pylint: disable = C0114, C0115, C0116
+# pylint: disable = C0103, C0114, C0115, C0116
 from typing import Dict, List, Tuple
 from math import pi, sqrt, sin, cos, asin
+import matplotlib.pyplot as plt
 
 
 class City:
@@ -77,31 +78,35 @@ class CityCollection:
     def total_distance_travel_to(self, city: City) -> float:
         host_city = city
         return sum([city.distance_to(host_city) * city.num_attendees
-                    for city in self.cities if city != host_city])
+                    for city in self.cities if city.name != host_city.name])
 
     def travel_by_country(self, city: City) -> Dict[str, float]:
         host_city = city
         return {country: sum([city.distance_to(host_city) * city.num_attendees
                               for city in self.cities
-                              if city != host_city and city.country == country
+                              if city.name != host_city.name
+                              and city.country == country
                               ])
                 for country in self.countries()}
 
     def total_co2(self, city: City) -> float:
         host_city = city
         return sum([city.co2_to(host_city) for city in self.cities
-                    if city != host_city])
+                    if city.name != host_city.name])
 
     def co2_by_country(self, city: City) -> Dict[str, float]:
         host_city = city
         return {country: sum([city.co2_to(host_city) for city in self.cities
-                              if city != host_city and city.country == country
+                              if city.name != host_city.name
+                              and city.country == country
                               ])
                 for country in self.countries()}
 
     def summary(self, city: City):
         host_city = city
-        cities_not_host = [city for city in self.cities if city != host_city]
+        cities_not_host = [city for city in self.cities
+                           if city.name != host_city.name
+                           and city.num_attendees > 0]
         total_cities_not_host = len(cities_not_host)
         total_attendees_not_host = sum([city.num_attendees
                                         for city in cities_not_host])
@@ -126,9 +131,8 @@ class CityCollection:
                              "than the available number of countries "
                              f"({len(dict_co2_by_country)})")
 
-        import matplotlib.pyplot as plt
         list_country_by_co2 = sorted(dict_co2_by_country.items(), reverse=True,
-                                    key=lambda tupl: tupl[1])
+                                     key=lambda tupl: tupl[1])
         x, y = list(map(list, zip(*list_country_by_co2)))
         if n < len(x):
             x, y = x[:n] + ['All other countries'], y[:n] + [sum(y[n:])]
@@ -143,4 +147,4 @@ class CityCollection:
         if save:
             fig.savefig(f"./{host_city.name.lower().replace(' ','_')}.png")
         else:
-            fig
+            return fig

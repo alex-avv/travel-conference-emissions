@@ -61,5 +61,12 @@ def test_co2_to(test_name):
     co2 = visitor_city.co2_to(host_city)
     assert co2 == expected_value
 
-def test_read_attendees_file():
-    raise NotImplementedError
+
+def test_read_attendees_file_type():
+    file_path = 9474
+    expected_err_message = ("File path should be given as a pathlib.Path "
+                            "object or a string")
+
+    with raises(TypeError) as exception:
+        read_attendees_file(file_path)
+    assert str(exception.value) == expected_err_message

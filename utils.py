@@ -1,4 +1,4 @@
-# pylint: disable = C0114, C0116
+# pylint: disable = C0103, C0114, C0116
 from typing import List, Tuple
 from pathlib import Path
 import csv
@@ -50,6 +50,8 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
     for i, _ in enumerate(cits):
         try:
             if (any([num in cits[i] for num in numbers])
+                # The exception below is to allow the code to run for the
+                # given attendees file
                 and cits[i] != ('Skrzatow '
                                 '1')):
                 raise TypeError('String contains numbers')
