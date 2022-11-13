@@ -63,6 +63,9 @@ class CityCollection:
     def __init__(self, cities: List[City]):
         if not isinstance(cities, list):
             raise TypeError("Cities should be given as a list of City objects")
+        if not cities:
+            raise ValueError("Cities list is empty. It should have at least "
+                             "one element")
         if not all([isinstance(city, City) for city in cities]):
             raise TypeError("Cities should be given as a list of only City "
                             "objects")

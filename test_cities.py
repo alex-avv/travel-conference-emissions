@@ -1,4 +1,4 @@
-# pylint: disable = C0103, C0114, C0115, C0116
+# pylint: disable = C0103, C0114, C0115, C0116, W0621
 # type: ignore
 from pathlib import Path
 import json
@@ -93,3 +93,23 @@ def create_equivalent_city_collection():
 
 city_collection = read_attendees_file(sample_file_path)
 _, host_city = create_equivalent_city_collection()
+
+
+@mark.parametrize('city_collection', [city_collection])
+def test_CityCollection_properties_type(city_collection):
+    expected_err_message = "Cities should be given as a list of City objects"
+    with raises(TypeError) as exception:
+        CityCollection(tuple(city_collection.cities))
+    assert str(exception.value) == expected_err_message
+
+    expected_err_message = ("Cities list is empty. It should have at least "
+                            "one element")
+    with raises(ValueError) as exception:
+        CityCollection([])
+    assert str(exception.value) == expected_err_message
+
+    expected_err_message = ("Cities should be given as a list of only City "
+                            "objects")
+    with raises(TypeError) as exception:
+        CityCollection(city_collection.cities + ['foo'])
+    assert str(exception.value) == expected_err_message
