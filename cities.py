@@ -31,12 +31,12 @@ class City:
             and name != ('Skrzatow '
                          '1')):
             raise ValueError("Name contains numbers")
-        
+
         if country[0].islower():
             raise ValueError("First letter in country should be upper case")
         if any([num in country for num in numbers]):
             raise ValueError("Country contains numbers")
-            
+
         if num_attendees < 0:
             raise ValueError("Number of attendees should be a positive "
                              "integer")
@@ -141,6 +141,12 @@ class CityCollection:
         host_city = city
         dict_co2_by_country = self.co2_by_country(host_city)
 
+        if not isinstance(n, int):
+            raise TypeError("Chosen top emitters number must be given as an "
+                            "integer")
+        if n > 15:
+            raise ValueError(f"Chosen top emitters number ({n}) is too large. "
+                             "For a clear plot, set it lower than 15")
         if n > len(dict_co2_by_country):
             raise ValueError(f"Chosen top emitters number ({n}) is larger "
                              "than the available number of countries "
