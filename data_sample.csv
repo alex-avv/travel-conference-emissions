@@ -1,0 +1,11 @@
+lat,state,N,dummy,country,lon,city,foo
+0.0,,10,*,Host Country,0.0,Host City,1
+-8.993216059187306,First State,5,#,Country A,0.0,City A,2
+71.94572847349845,,2,$,Country E,0.0,City B,3
+0.0,,5,_,Country D,-89.93216059187306,City C,4
+0.0,Second State,5,?,Host Country,8.993216059187306,City D,5
+47.0,Third State,1,@,Country C,-13.0,City E,6
+25.0,,1,+,Country B,-113.0,City F,7
+41.288795,-,2,@,Country C,-5.222789,City G,8
+-71.94572847349845,,2,$,Country F,0.0,City H,9
+-60.0,,0,[],Empty Country,130.0,Empty City,10

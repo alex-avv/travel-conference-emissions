@@ -1,11 +1,19 @@
 # pylint: disable = C0103, C0114, C0115, C0116
 # type: ignore
+from pathlib import Path
 import json
 from pytest import mark, raises
 from cities import City, CityCollection
 
-with open('test_fixtures.json', 'r', encoding="utf-8") as json_test_fixtures:
+with open('fixtures.json', 'r', encoding="utf-8") as json_test_fixtures:
     dict_test_fixtures = json.load(json_test_fixtures)
+
+# Test to check data sample file is in the same folder
+sample_file_path = Path("./data_sample.csv")
+if not sample_file_path.is_file():
+    raise FileNotFoundError("'data_sample.csv' file required for "
+                            "CityCollection's methods tests must be in the "
+                            f"same directory as {Path(__file__).name}")
 
 
 @mark.parametrize('test_name', dict_test_fixtures['City_properties_type'])
