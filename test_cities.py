@@ -113,3 +113,17 @@ def test_CityCollection_properties_type(city_collection):
     with raises(TypeError) as exception:
         CityCollection(city_collection.cities + ['foo'])
     assert str(exception.value) == expected_err_message
+
+
+@mark.parametrize('city_collection', [city_collection])
+def test_countries(city_collection):
+    expected_list = ['Country A', 'Country B', 'Country C', 'Country D',
+                     'Country E', 'Country F', 'Empty Country', 'Host Country']
+    assert city_collection.countries() == expected_list
+
+
+@mark.parametrize('city_collection', [city_collection])
+def test_total_attendees(city_collection):
+    city_collection = read_attendees_file(Path('./data_sample.csv'))
+    expected_value = 33
+    assert city_collection.total_attendees() == expected_value
