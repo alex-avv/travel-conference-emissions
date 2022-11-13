@@ -127,3 +127,18 @@ def test_total_attendees(city_collection):
     city_collection = read_attendees_file(Path('./data_sample.csv'))
     expected_value = 33
     assert city_collection.total_attendees() == expected_value
+
+
+@mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
+def test_total_distance_travel_to(city_collection, host_city):
+    expected_value = (1000.0 * 5  # City A
+                      + 8000.0 * 2  # City B
+                      + 10000.0 * 5  # City C
+                      + 1000.0 * 5  # City D
+                      + 5376.784134555366  # City E
+                      + 12313.69104931205  # City F
+                      + 4621.144035453923 * 2  # City G
+                      + 8000.0 * 2  # City H
+                      + 0.0)  # Empty City
+    total_distance = city_collection.total_distance_travel_to(host_city)
+    assert total_distance == expected_value
