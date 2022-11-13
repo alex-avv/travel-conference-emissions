@@ -107,17 +107,17 @@ class CityCollection:
 
     def summary(self, city: City):
         host_city = city
-        cities_not_host = [city for city in self.cities
-                           if city.name != host_city.name
-                           and city.num_attendees > 0]
-        total_cities_not_host = len(cities_not_host)
+        cities_not_host_not_empty = [city for city in self.cities
+                                     if city.name != host_city.name
+                                     and city.num_attendees > 0]
+        total_cities_not_host_not_empty = len(cities_not_host_not_empty)
         total_attendees_not_host = sum([city.num_attendees
-                                        for city in cities_not_host])
+                                        for city in cities_not_host_not_empty])
 
         print(f"Host city: {host_city.name} ({host_city.country})\n"
               f"Total CO2: {round(self.total_co2(host_city) / 1000)} tonnes\n"
               f"Total attendees travelling to {host_city.name} "
-              f"from {total_cities_not_host} different cities: "
+              f"from {total_cities_not_host_not_empty} different cities: "
               f"{total_attendees_not_host}")
 
     def sorted_by_emissions(self) -> List[Tuple[str, float]]:

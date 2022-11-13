@@ -185,3 +185,16 @@ def test_co2_by_country(city_collection, host_city):
                      'Empty Country': 0.0,  # Empty City
                      'Host Country': 1000.0 * 5 * 200}  # City D
     assert city_collection.co2_by_country(host_city) == expected_dict
+
+
+@mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
+def test_summary(capsys, city_collection, host_city):
+    print("Host city: Host City (Host Country)\n"
+          "Total CO2: 32349 tonnes\n"
+          "Total attendees travelling to Host City "
+          "from 8 different cities: 23")
+
+    expected_print = capsys.readouterr().out
+    city_collection.summary(host_city)
+
+    assert capsys.readouterr().out == expected_print
