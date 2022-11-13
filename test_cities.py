@@ -4,6 +4,7 @@ from pathlib import Path
 import json
 from pytest import mark, raises
 from cities import City, CityCollection
+from utils import read_attendees_file
 
 with open('fixtures.json', 'r', encoding="utf-8") as json_test_fixtures:
     dict_test_fixtures = json.load(json_test_fixtures)
@@ -70,3 +71,25 @@ def test_read_attendees_file_type():
     with raises(TypeError) as exception:
         read_attendees_file(file_path)
     assert str(exception.value) == expected_err_message
+
+
+def create_equivalent_city_collection():
+    host_city = City('Host City', 'Host Country', 10, 0.0, 0.0)
+    host_city_equivalent = City('Host City', 'Host Country', 10, 0.0, 0.0)
+    city_a = City('City A', 'Country A', 5, -8.993216059187306, 0.0)
+    city_b = City('City B', 'Country E', 2, 71.94572847349845, 0.0)
+    city_c = City('City C', 'Country D', 5, 0.0, -89.93216059187306)
+    city_d = City('City D', 'Host Country', 5, 0.0,  8.993216059187306)
+    city_e = City('City E', 'Country C', 1, 47.0, -13.0)
+    city_f = City('City F', 'Country B', 1, 25.0, -113.0)
+    city_g = City('City G', 'Country C', 2, 41.288795, -5.222789)
+    city_h = City('City H', 'Country F', 2, -71.94572847349845, 0.0)
+    empty_city = City('Empty City', 'Empty Country', 0, -60.0, 130.0)
+
+    city_objects_list = [host_city_equivalent, city_a, city_b, city_c, city_d,
+                         city_e, city_f, city_g, city_h, empty_city]
+    return CityCollection(city_objects_list), host_city
+
+
+city_collection = read_attendees_file(sample_file_path)
+_, host_city = create_equivalent_city_collection()
