@@ -142,3 +142,17 @@ def test_total_distance_travel_to(city_collection, host_city):
                       + 0.0)  # Empty City
     total_distance = city_collection.total_distance_travel_to(host_city)
     assert total_distance == expected_value
+
+
+@mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
+def test_travel_by_country(city_collection, host_city):
+    expected_dict = {'Country A': 1000.0 * 5,  # City A
+                     'Country B': 12313.69104931205,  # City F
+                     'Country C': (5376.784134555366 + 4621.144035453923 * 2
+                                   ),  # Cities E, G
+                     'Country D': 10000.0 * 5,  # City C
+                     'Country E': 8000.0 * 2,  # City B
+                     'Country F': 8000.0 * 2,  # City H
+                     'Empty Country': 0.0,  # Empty City
+                     'Host Country': 1000.0 * 5}  # City D
+    assert city_collection.travel_by_country(host_city) == expected_dict
