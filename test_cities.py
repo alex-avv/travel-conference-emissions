@@ -198,3 +198,18 @@ def test_summary(capsys, city_collection, host_city):
     city_collection.summary(host_city)
 
     assert capsys.readouterr().out == expected_print
+
+
+@mark.parametrize('city_collection', [city_collection])
+def test_sorted_by_emissions(city_collection):
+    expected_list = [('Host City', 32348875.36615942),
+                     ('City A', 35883975.37894608),
+                     ('City D', 37670304.74222578),
+                     ('City G', 51246715.2228203),
+                     ('City E', 54334053.72255414),
+                     ('City B', 75005988.80111568),
+                     ('City H', 80963091.70165823),
+                     ('City C', 82883594.99465851),
+                     ('City F', 101781389.10593049),
+                     ('Empty City', 121371790.09858932)]
+    assert city_collection.sorted_by_emissions() == expected_list
