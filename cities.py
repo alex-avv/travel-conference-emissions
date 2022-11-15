@@ -142,6 +142,9 @@ class CityCollection:
         if not isinstance(n, int):
             raise TypeError("Chosen top emitters number must be given as an "
                             "integer")
+        if n < 1:
+            raise ValueError(f"Chosen top emitters number ({n}) must be 1 or "
+                              "larger")
         if n > 15:
             raise ValueError(f"Chosen top emitters number ({n}) is too large. "
                              "For a clear plot, set it lower than 15")

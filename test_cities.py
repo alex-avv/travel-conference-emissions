@@ -2,7 +2,7 @@
 # type: ignore
 from pathlib import Path
 import json
-from pytest import mark, raises
+from pytest import mark, raises, approx
 from cities import City, CityCollection
 from utils import read_attendees_file
 
@@ -48,7 +48,7 @@ def test_distance_to(test_name):
 
     host_city, visitor_city = City(*host_city_input), City(*visitor_city_input)
     distance = visitor_city.distance_to(host_city)
-    assert distance == expected_value
+    assert distance == approx(expected_value)
 
 
 @mark.parametrize('test_name', dict_test_fixtures['co2_to'])
@@ -60,7 +60,7 @@ def test_co2_to(test_name):
 
     host_city, visitor_city = City(*host_city_input), City(*visitor_city_input)
     co2 = visitor_city.co2_to(host_city)
-    assert co2 == expected_value
+    assert co2 == approx(expected_value)
 
 
 def test_read_attendees_file_type():
@@ -141,7 +141,7 @@ def test_total_distance_travel_to(city_collection, host_city):
                       + 8000.0 * 2  # City H
                       + 0.0)  # Empty City
     total_distance = city_collection.total_distance_travel_to(host_city)
-    assert total_distance == expected_value
+    assert total_distance == approx(expected_value)
 
 
 @mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
@@ -155,7 +155,7 @@ def test_travel_by_country(city_collection, host_city):
                      'Country F': 8000.0 * 2,  # City H
                      'Empty Country': 0.0,  # Empty City
                      'Host Country': 1000.0 * 5}  # City D
-    assert city_collection.travel_by_country(host_city) == expected_dict
+    assert city_collection.travel_by_country(host_city) == approx(expected_dict)
 
 
 @mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
@@ -169,7 +169,7 @@ def test_total_co2(city_collection, host_city):
                       + 4621.144035453923 * 2 * 250  # City G
                       + 8000.0 * 2 * 250  # City H
                       + 0.0)  # Empty City
-    assert city_collection.total_co2(host_city) == expected_value
+    assert city_collection.total_co2(host_city) == approx(expected_value)
 
 
 @mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
@@ -184,7 +184,7 @@ def test_co2_by_country(city_collection, host_city):
                      'Country F': 8000.0 * 2 * 250,  # City H
                      'Empty Country': 0.0,  # Empty City
                      'Host Country': 1000.0 * 5 * 200}  # City D
-    assert city_collection.co2_by_country(host_city) == expected_dict
+    assert city_collection.co2_by_country(host_city) == approx(expected_dict)
 
 
 @mark.parametrize('city_collection, host_city', [(city_collection, host_city)])
@@ -202,16 +202,16 @@ def test_summary(capsys, city_collection, host_city):
 
 @mark.parametrize('city_collection', [city_collection])
 def test_sorted_by_emissions(city_collection):
-    expected_list = [('Host City', 32348875.36615942),
-                     ('City A', 35883975.37894608),
-                     ('City D', 37670304.74222578),
-                     ('City G', 51246715.2228203),
-                     ('City E', 54334053.72255414),
-                     ('City B', 75005988.80111568),
-                     ('City H', 80963091.70165823),
-                     ('City C', 82883594.99465851),
-                     ('City F', 101781389.10593049),
-                     ('Empty City', 121371790.09858932)]
+    expected_list = [('Host City', approx(32348875.36615942)),
+                     ('City A', approx(35883975.37894608)),
+                     ('City D', approx(37670304.74222578)),
+                     ('City G', approx(51246715.2228203)),
+                     ('City E', approx(54334053.72255414)),
+                     ('City B', approx(75005988.80111568)),
+                     ('City H', approx(80963091.70165823)),
+                     ('City C', approx(82883594.99465851)),
+                     ('City F', approx(101781389.10593049)),
+                     ('Empty City', approx(121371790.09858932))]
     assert city_collection.sorted_by_emissions() == expected_list
 
 
@@ -234,4 +234,4 @@ def test_plot_top_emitters(city_collection, host_city):
     x_values_plot = [xs.get_text() for xs in axes_plot.get_xticklabels()]
     y_values_plot = list(axes_plot.containers[0].datavalues)
 
-    assert (x_values_plot, y_values_plot) == (expected_x, expected_y)
+    assert (x_values_plot, y_values_plot) == (expected_x, approx(expected_y))

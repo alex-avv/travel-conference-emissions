@@ -8,4 +8,4 @@ lat,state,N,dummy,country,lon,city,foo
 25.0,,1,+,Country B,-113.0,City F,7
 41.288795,-,2,@,Country C,-5.222789,City G,8
 -71.94572847349845,,2,$,Country F,0.0,City H,9
--60.0,,0,[],emty Country,130.0,Empty City,10
+-60.0,,0,[],empty Country,130.0,Empty City,10
