@@ -48,28 +48,20 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
     numbers = [str(num) for num in range(10)]
 
     for i, _ in enumerate(cits):
-        try:
-            if (any([num in cits[i] for num in numbers])
-                # The exception below is to allow the code to run for the
-                # given attendees file
-                and cits[i] != ('Skrzatow '
-                                '1')):
-                raise TypeError('String contains numbers')
-        except Exception as err:
-            raise TypeError(f"City '{cits[i]}' in row {i + 2} should be "
-                            "written as a string") from err
-        try:
-            if any([num in countrs[i] for num in numbers]):
-                raise TypeError('String contains numbers')
-        except Exception as err:
-            raise TypeError(f"Country '{countrs[i]}' in row {i + 2} should be "
-                            "written as a string") from err
+        if any([num in cits[i][0] for num in numbers]):
+            raise TypeError(f"First letter of city '{cits[i]}' in row {i + 2} "
+                            "should be non-number")
+        
+        if any([num in countrs[i][0] for num in numbers]):
+            raise TypeError(f"First letter of country '{countrs[i]}' in row "
+                            f"{i + 2} should be non-number")
+        
         try:
             if '.' in ns[i]:
                 raise TypeError('Integer contains decimal point')
             if not all([any([num in letter for num in numbers])
                         for letter in ns[i]]):
-                raise TypeError('Integer contains character')
+                raise TypeError('Integer contains non-number character')
             ns[i] = int(ns[i])  # type: ignore
         except Exception as err:
             raise TypeError(f"Number of attendees '{ns[i]}' in row {i + 2} "
@@ -80,7 +72,8 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
                                 'decimal point')
             if not all([any([num in letter for num in (numbers + ['.', '-'])])
                         for letter in lats[i]]):
-                raise TypeError('Floating point number contains character')
+                raise TypeError('Floating point number contains non-number '
+                                'character')
             lats[i] = float(lats[i])  # type: ignore
         except Exception as err:
             raise TypeError(f"Latitude '{lats[i]}' in row {i + 2} should be "
@@ -91,7 +84,8 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
                                 'decimal point')
             if not all([any([num in letter for num in (numbers + ['.', '-'])])
                         for letter in longs[i]]):
-                raise TypeError('Floating point number contains character')
+                raise TypeError('Floating point number contains non-number '
+                                'character')
             longs[i] = float(longs[i])  # type: ignore
         except Exception as err:
             raise TypeError(f"Longitude '{longs[i]}' in row {i + 2} should be "

@@ -23,19 +23,17 @@ class City:
 
         numbers = [str(num) for num in range(10)]
 
+        if any([num in name[0] for num in numbers]):
+            raise ValueError("First letter in name should be non-number")
+        # Automatically capitalising first letter of name
         if name[0].islower():
-            raise ValueError("First letter in name should be upper case")
-        if (any([num in name for num in numbers])
-            # The exception below is to allow the code to run for the
-            # given attendees file
-            and name != ('Skrzatow '
-                         '1')):
-            raise ValueError("Name contains numbers")
+            name = name[0].upper() + name[1:]
 
+        if any([num in country[0] for num in numbers]):
+            raise ValueError("First letter in country should be non-number")
+        # Automatically capitalising first letter of country
         if country[0].islower():
-            raise ValueError("First letter in country should be upper case")
-        if any([num in country for num in numbers]):
-            raise ValueError("Country contains numbers")
+            country = country[0].upper() + country[1:]
 
         if num_attendees < 0:
             raise ValueError("Number of attendees should be a positive "

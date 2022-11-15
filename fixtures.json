@@ -28,24 +28,14 @@
 	],
 	
 	"City_properties_value": [
-		{"first_letter_lower_case_name": {
-			"properties": ["paris", "France", 173, 48.8566101, 2.3514992],
-			"expected_err_message": "First letter in name should be upper case"
-			}
-		},
-		{"with_numbers_name": {
+		{"first_letter_non_number_name": {
 			"properties": ["9aris", "France", 173, 48.8566101, 2.3514992],
-			"expected_err_message": "Name contains numbers"
+			"expected_err_message": "First letter in name should be non-number"
 			}
 		},
-		{"first_letter_lower_case_country": {
-			"properties": ["Paris", "france", 173, 48.8566101, 2.351499],
-			"expected_err_message": "First letter in country should be upper case"
-			}
-		},
-		{"with_numbers_country": {
-			"properties": ["Paris", "France 3", 173, 48.8566101, 2.351499],
-			"expected_err_message": "Country contains numbers"
+		{"first_letter_non_number_country": {
+			"properties": ["Paris", "4rance", 173, 48.8566101, 2.351499],
+			"expected_err_message": "First letter in country should be non-number"
 			}
 		},
 		{"negative_num_of_attendees": {
