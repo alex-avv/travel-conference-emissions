@@ -49,25 +49,28 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
 
     for i, _ in enumerate(cits):
         if any([num in cits[i][0] for num in numbers]):
-            raise TypeError(f"First letter of city '{cits[i]}' in row {i + 2} "
-                            "should be non-number")
+            raise ValueError(f"First letter of city '{cits[i]}' in row {i + 2} "
+                             "should be non-number")
         
         if any([num in countrs[i][0] for num in numbers]):
-            raise TypeError(f"First letter of country '{countrs[i]}' in row "
-                            f"{i + 2} should be non-number")
+            raise ValueError(f"First letter of country '{countrs[i]}' in row "
+                             f"{i + 2} should be non-number")
         
         try:
             if '.' in ns[i]:
                 raise TypeError('Integer contains decimal point')
-            if not all([any([num in letter for num in numbers])
+            if not all([any([num in letter for num in (numbers + ['+'])])
                         for letter in ns[i]]):
                 raise TypeError('Integer contains non-number character')
+            if '-' in ns[i]:
+                raise ValueError('Integer contains minus sign')
             ns[i] = int(ns[i])  # type: ignore
         except Exception as err:
             raise TypeError(f"Number of attendees '{ns[i]}' in row {i + 2} "
-                            "should be written as an integer") from err
+                            "should be written as a positive integer") from err
         try:
-            if not all([any([num in letter for num in (numbers + ['.', '-'])])
+            if not all([any([num in letter
+                             for num in (numbers + ['.', '+', '-'])])
                         for letter in lats[i]]):
                 raise TypeError('Floating point number contains non-number '
                                 'character')
@@ -76,7 +79,8 @@ def assign_cities_data_types(cits: List[str], countrs: List[str],
             raise TypeError(f"Latitude '{lats[i]}' in row {i + 2} should be "
                             "written as a floating point number") from err
         try:
-            if not all([any([num in letter for num in (numbers + ['.', '-'])])
+            if not all([any([num in letter
+                             for num in (numbers + ['.', '+', '-'])])
                         for letter in longs[i]]):
                 raise TypeError('Floating point number contains non-number '
                                 'character')
